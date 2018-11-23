@@ -6,7 +6,6 @@
 #                                                                                                                      #
 # -------------------------------------------------------------------------------------------------------------------- #
 import numpy as np
-import math
 
 
 class Point:
@@ -41,7 +40,7 @@ class Vector:
 
     # Betrag bzw. Länge
     def length(self):
-        return math.sqrt(self.x**2 + self.y**2 + self.z**2)
+        return np.sqrt(self.x**2 + self.y**2 + self.z**2)
 
     # Skalarprodukt
     def scalprod(self, b):
@@ -52,8 +51,8 @@ class Vector:
         len_u = self.length()
         len_v = b.length()
         # Winkel in Radians und Grad
-        angle_rad = math.acos(self.scalprod(b)/(len_u * len_v))
-        angle_deg = angle_rad * 180/math.pi
+        angle_rad = np.arccos(self.scalprod(b)/(len_u * len_v))
+        angle_deg = angle_rad * 180/np.pi
         return angle_rad, angle_deg
 
     # Differenz zwischen zwei Vektoren
@@ -174,8 +173,8 @@ def intersect_ray_sphere(ray, sphere):
     #                    d = 0 existieren 2 identische Lösungen (Gerade tangiert Kugel) und für
     if d >= 0:
 
-        t1 = (-b - math.sqrt(d))/(2*a)
-        t2 = (-b + math.sqrt(d))/(2*a)
+        t1 = (-b - np.sqrt(d))/(2*a)
+        t2 = (-b + np.sqrt(d))/(2*a)
 
         intersection1 = ray.calc_point(t1)
         intersection2 = ray.calc_point(t2)
