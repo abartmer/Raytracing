@@ -216,8 +216,8 @@ print("Schnittpunkt:", 6*"\t", intersect_ray_plane(g1, e1)[0],
 v1 = Vector(5, 4, 2)
 v2 = Vector(-1, 3, 2)
 
-print("Vektor v1: ", 6*"\t", v1.__str__())
-print("Vektor v2: ", 6*"\t", v2.__str__())
+print("Vektor v1: ", 6*"\t", v1)
+print("Vektor v2: ", 6*"\t", v2)
 print("Länge v1: ", 7*"\t", v1.length())
 print("v1 normiert: ", 6*"\t", v1.normalized())
 print("Skalarprodukt v1*v2:", 4*"\t", v1.scalprod(v2))
@@ -228,7 +228,7 @@ g2 = Ray(v1, v2)
 mid_point = Point(0, 7, 7)
 K1 = Sphere(mid_point, 5)
 
-print("Kreisgleichung als String: ", 2*"\t", K1.__str__())
+print("Kreisgleichung als String: ", 2*"\t", K1)
 # Beispiel aus: https://www.lernhelfer.de/schuelerlexikon/mathematik-abitur/artikel/kugel-und-gerade
 # müsste P1 = (2.5714.., 11.2857.., 6.8571..) und P2 = (4, 7, 4) zurückgeben, gibt Müll zurück
 print("Schnittpunkte mit dem Kreis:", 2*"\t", intersect_ray_sphere(g2, K1)[0], ", ", intersect_ray_sphere(g2, K1)[1])
