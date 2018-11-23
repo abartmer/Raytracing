@@ -61,6 +61,14 @@ class Vector:
                       b.y - self.y,
                       b.z - self.z)
 
+    # Normierter Vektor (Einheitsvektor) = v / |v|
+    def normalized(self):
+        length = self.length()
+        x = self.x/length
+        y = self.y/length
+        z = self.z/length
+        return Vector(x, y, z)
+
 
 class Ray:
     # Gerade bzw. Strahl besteht aus Stützvektor (sup_vec) und Spannvektor (dir_vec) sowie dessen Faktor r
@@ -165,8 +173,8 @@ def intersect_ray_polygon(ray, plane):
 # Schnittpunkt Gerade, Kugel
 def intersect_ray_sphere(ray, sphere):
 
-    D = Vector(ray.dir_vec)
-    L = Vector(ray.sup_vec)
+    D = ray.dir_vec.normalized()
+    L = ray.sup_vec
     a = D.scalprod(D)
     b = 2 * D.scalprod(L)
     c = L.scalprod(L) - sphere.radius_squared
@@ -216,6 +224,6 @@ mid_point = Point(0, 7, 7)
 K1 = Sphere(mid_point, 5)
 
 # Beispiel aus: https://www.lernhelfer.de/schuelerlexikon/mathematik-abitur/artikel/kugel-und-gerade)
-#print(intersect_ray_sphere(g2, K1))  # müsste P1 = (2.5714.., 11.2857.., 6.8571..) und P2 = (4, 7, 4) zurückgeben
+print("Schnittpunkte mit dem Kreis:", 2*"\t", intersect_ray_sphere(g2, K1))  # müsste P1 = (2.5714.., 11.2857.., 6.8571..) und P2 = (4, 7, 4) zurückgeben
 print("Kreisgleichung als String: ", 2*"\t", K1.__str__())
 
