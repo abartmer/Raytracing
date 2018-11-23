@@ -15,7 +15,7 @@ class Point:
         self.x, self.y, self.z = x, y, z
 
     def __str__(self):
-        return "("+str(self.x) + ", "+str(self.y) + ", "+str(self.z)+")"
+        return str(self.values)
 
     # __iter__ und __getitem__, damit Datenstruktur komfortabler verwendbar ist
     def __iter__(self):
@@ -37,7 +37,7 @@ class Vector:
         return self.values[item]
 
     def __str__(self):
-        return "("+str(self.x) + ", "+str(self.y) + ", "+str(self.z)+")"
+        return str(self.values)
 
     # Betrag bzw. Länge
     def length(self):
