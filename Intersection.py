@@ -11,19 +11,35 @@ import math
 
 class Point:
     def __init__(self, x=0, y=0, z=0):
+        self.values = (x, y, z)
         self.x, self.y, self.z = x, y, z
 
     def __str__(self):
         return "("+str(self.x) + ", "+str(self.y) + ", "+str(self.z)+")"
+
+    # __iter__ und __getitem__, damit Datenstruktur komfortabler verwendbar ist
+    def __iter__(self):
+        return self.values.__iter__()
+
+    def __getitem__(self, item):
+        return self.values[item]
 
 
 class Vector:
     def __init__(self, x=0, y=0, z=0):
+        self.values = (x, y, z)
         self.x, self.y, self.z = x, y, z
+
+    def __iter__(self):
+        return self.values.__iter__()
+
+    def __getitem__(self, item):
+        return self.values[item]
 
     def __str__(self):
         return "("+str(self.x) + ", "+str(self.y) + ", "+str(self.z)+")"
 
+    # Betrag bzw. Länge
     def length(self):
         return math.sqrt(self.x**2 + self.y**2 + self.z**2)
 
@@ -103,10 +119,9 @@ def intersect_ray_plain(ray, plain):
 
     x = np.linalg.solve(a, b)
 
-    # errechneten Parameter in die Parameterform der Geraden einsetzen -> Schnittpunkt erhalten
-
+    # errechneten Parameter x[0] als Faktor in die Parameterform der Geraden einsetzen -> Schnittpunkt erhalten
     intersection = ray.calc_point(x[0])
-    # Länge Vector |AB| berechnen (A = Stützvektor Gerade, B = Schnittpunkt)
+    # Länge Vektor |AB| berechnen (A = Stützvektor Gerade, B = Schnittpunkt)
     dist_point_origin = Point(int(intersection.x - ray.sup_vec.x),
                               int(intersection.y - ray.sup_vec.y),
                               int(intersection.z - ray.sup_vec.z))
@@ -139,9 +154,12 @@ def intersect_ray_polygon(ray, plain):
         return
 
 
-def intersect_ray_sphere(ray, sphere):
-    # Quelle hierfür:
+""" FUNKTIONIERT NICHT TypeError: unsupported operand type(s) for *: 'Vector' and 'Vector'
+    
+    # Hilfreiche Quelle hierfür:
     # https://www.scratchapixel.com/lessons/3d-basic-rendering/minimal-ray-tracer-rendering-simple-shapes/ray-sphere-intersection
+
+def intersect_ray_sphere(ray, sphere):
 
     D = Vector(ray.dir_vec)
     L = Vector(ray.sup_vec)
@@ -166,14 +184,8 @@ def intersect_ray_sphere(ray, sphere):
         intersection2 = None
 
     return intersection1, intersection2,
-
-"""   
-    x = ray.sup_vec.x + ray.r * ray.dir_vec.x
-    y = ray.sup_vec.y + ray.r * ray.dir_vec.y
-    z = ray.sup_vec.z + ray.r * ray.dir_vec.z
-
-    K = (x - sphere.mid_point[0])**2 + (y - sphere.mid_point[1])**2 + (z - sphere.mid_point[2])**2 - sphere.radius**2
 """
+
 
 # -------------------------------------------------- Testeroni ------------------------------------------------------- #
 
@@ -186,8 +198,16 @@ print("Schnittpunkt:", "\t", intersect_ray_plain(g1, e1)[0],
       "\n" "Abstand:", 2*"\t", intersect_ray_plain(g1, e1)[1])
 
 
-a1 = Vector(2, 2, 1)
-a2 = Vector(-1, -1, 1)
-print("Skalarprodukt:", a1.scalprod(a2))
-print("Winkel zw. 2 Vektoren (Radians, Grad):", a1.angle_with(a2))
-print("Differenz zwischen zwei Vektoren:", a1.delta(a2))
+v1 = Vector(5, 4, 2)
+v2 = Vector(-1, 3, 2)
+print("Skalarprodukt:", v1.scalprod(v2))
+print("Winkel zw. 2 Vektoren (Radians, Grad):", v1.angle_with(v2))
+print("Differenz zwischen zwei Vektoren:", v1.delta(v2))
+
+g2 = Ray(v1, v2)
+mid_point = Point(0, 7, 7)
+K1 = Sphere(mid_point, 5)
+
+#print(intersect_ray_sphere(g2, K1))
+print("Kreisgleichung als String: " + K1.__str__())
+
