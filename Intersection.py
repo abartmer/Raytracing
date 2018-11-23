@@ -100,6 +100,8 @@ class Sphere:
     def __init__(self, mid_point=(0, 0, 0), radius=1):
         self.mid_point = mid_point
         self.radius = radius
+        # radius^2 in den Konstruktor packen, spart Rechenleistung
+        self.radius_squared = radius**2
 
     def __str__(self):
         return "(x - " + str(self.mid_point[0]) + ")^2 + (y - " + str(self.mid_point[1]) + ")^2 + " \
@@ -169,7 +171,7 @@ def intersect_ray_sphere(ray, sphere):
     L = Vector(ray.sup_vec)
     a = D.scalprod(D)
     b = 2 * D.scalprod(L)
-    c = L.scalprod(L) - sphere.radius**2
+    c = L.scalprod(L) - sphere.radius_squared
 
     d = (b**2) - (4*a*c)
     # Wenn Diskriminante d > 0 existieren 2 verschiedene Lösungen (Gerade durchstößt Kugel), für
