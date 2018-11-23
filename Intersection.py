@@ -105,7 +105,8 @@ class Plane:
 
 
 class Sphere:
-    # Kugel besteht aus einem Mittelpunkt und einem Radius
+    # Kugel besteht aus einem Mittelpunkt m = (m1,m2,m3) und einem Radius
+    # K = (x-m1)^2 + (y-m2)^2 + (z-m3)^2 = r^2
     def __init__(self, mid_point=(0, 0, 0), radius=1):
         self.mid_point = mid_point
         self.radius = radius
