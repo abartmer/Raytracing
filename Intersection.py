@@ -77,7 +77,7 @@ class Ray:
                      int(self.sup_vec.z + r * self.dir_vec.z))
 
 
-class Plain:
+class Plane:
     # Ebene besteht aus Stützvektor (sup_vec) und 2 Spannvektoren (dir_vec) sowie deren Faktoren r und s
     # E = sup_vec + r * dir_vec1 + s * dir_vec2
     def __init__(self, sup_vec, dir_vec1, dir_vec2, r=1, s=1):
@@ -106,17 +106,18 @@ class Sphere:
         return "(x - " + str(self.mid_point[0]) + ")^2 + (y - " + str(self.mid_point[1]) + ")^2 + " \
                "(z - " + str(self.mid_point[2]) + ")^2 = " + str(self.radius**2)
 
+
 # Schnittpunkt Gerade, Ebene
-def intersect_ray_plain(ray, plain):
+def intersect_ray_plane(ray, plane):
 
     # alle Vektoren mit Parameter auf eine Seite bringen, Gleichungssystem lösen
 
-    a = np.array([[ray.dir_vec.x, -plain.dir_vec1.x, -plain.dir_vec2.x],
-                  [ray.dir_vec.y, -plain.dir_vec1.y, -plain.dir_vec2.y],
-                  [ray.dir_vec.z, -plain.dir_vec1.z, -plain.dir_vec2.z]])
-    b = np.array([plain.sup_vec.x - ray.sup_vec.x,
-                  plain.sup_vec.y - ray.sup_vec.y,
-                  plain.sup_vec.z - ray.sup_vec.z])
+    a = np.array([[ray.dir_vec.x, -plane.dir_vec1.x, -plane.dir_vec2.x],
+                  [ray.dir_vec.y, -plane.dir_vec1.y, -plane.dir_vec2.y],
+                  [ray.dir_vec.z, -plane.dir_vec1.z, -plane.dir_vec2.z]])
+    b = np.array([plane.sup_vec.x - ray.sup_vec.x,
+                  plane.sup_vec.y - ray.sup_vec.y,
+                  plane.sup_vec.z - ray.sup_vec.z])
 
     x = np.linalg.solve(a, b)
 
@@ -129,15 +130,16 @@ def intersect_ray_plain(ray, plain):
     # Ausgabe Schnittpunkt, Abstand
     return intersection, dist_point_origin
 
-# Schnittpunkt Gerade, Dreieck
-def intersect_ray_polygon(ray, plain):
 
-    a = np.array([[ray.dir_vec.x, -plain.dir_vec1.x, -plain.dir_vec2.x],
-                  [ray.dir_vec.y, -plain.dir_vec1.y, -plain.dir_vec2.y],
-                  [ray.dir_vec.z, -plain.dir_vec1.z, -plain.dir_vec2.z]])
-    b = np.array([plain.sup_vec.x - ray.sup_vec.x,
-                  plain.sup_vec.y - ray.sup_vec.y,
-                  plain.sup_vec.z - ray.sup_vec.z])
+# Schnittpunkt Gerade, Dreieck
+def intersect_ray_polygon(ray, plane):
+
+    a = np.array([[ray.dir_vec.x, -plane.dir_vec1.x, -plane.dir_vec2.x],
+                  [ray.dir_vec.y, -plane.dir_vec1.y, -plane.dir_vec2.y],
+                  [ray.dir_vec.z, -plane.dir_vec1.z, -plane.dir_vec2.z]])
+    b = np.array([plane.sup_vec.x - ray.sup_vec.x,
+                  plane.sup_vec.y - ray.sup_vec.y,
+                  plane.sup_vec.z - ray.sup_vec.z])
 
     x = np.linalg.solve(a, b)
 
@@ -158,6 +160,7 @@ def intersect_ray_polygon(ray, plain):
 
     # Hilfreiche Quelle hierfür:
     # https://www.scratchapixel.com/lessons/3d-basic-rendering/minimal-ray-tracer-rendering-simple-shapes/ray-sphere-intersection
+
 
 # Schnittpunkt Gerade, Kugel
 def intersect_ray_sphere(ray, sphere):
@@ -191,11 +194,11 @@ def intersect_ray_sphere(ray, sphere):
 
 
 g1 = Ray(Vector(2, -3, 2), Vector(1, -1, 3))
-e1 = Plain(Vector(-3, 1, 1), Vector(1, -2, -1), Vector(0, -1, 2))
+e1 = Plane(Vector(-3, 1, 1), Vector(1, -2, -1), Vector(0, -1, 2))
 
 
-print("Schnittpunkt:", 6*"\t", intersect_ray_plain(g1, e1)[0],
-      "\n" "Abstand:", 7*"\t", intersect_ray_plain(g1, e1)[1])
+print("Schnittpunkt:", 6*"\t", intersect_ray_plane(g1, e1)[0],
+      "\n" "Abstand:", 7*"\t", intersect_ray_plane(g1, e1)[1])
 
 
 v1 = Vector(5, 4, 2)
