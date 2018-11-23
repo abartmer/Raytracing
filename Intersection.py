@@ -105,7 +105,7 @@ class Sphere:
         return "(x - " + str(self.mid_point[0]) + ")^2 + (y - " + str(self.mid_point[1]) + ")^2 + " \
                "(z - " + str(self.mid_point[2]) + ")^2 = " + str(self.radius**2)
 
-
+# Schnittpunkt Gerade, Ebene
 def intersect_ray_plain(ray, plain):
 
     # alle Vektoren mit Parameter auf eine Seite bringen, Gleichungssystem lösen
@@ -128,7 +128,7 @@ def intersect_ray_plain(ray, plain):
     # Ausgabe Schnittpunkt, Abstand
     return intersection, dist_point_origin
 
-
+# Schnittpunkt Gerade, Dreieck
 def intersect_ray_polygon(ray, plain):
 
     a = np.array([[ray.dir_vec.x, -plain.dir_vec1.x, -plain.dir_vec2.x],
@@ -140,7 +140,7 @@ def intersect_ray_polygon(ray, plain):
 
     x = np.linalg.solve(a, b)
 
-    #Überprüfung ob der Schnittpunkt im Dreieck liegt. Parameter müssen <=1 sein.
+    # Überprüfung ob der Schnittpunkt im Dreieck liegt. Parameter müssen <=1 sein.
     if x[0] <= 1 and x[1] <= 1 and x[0]+x[1] <= 1:
         intersection = ray.calc_point(x[0])
         # Länge Vektor |AB| berechnen (A = StützVektor Gerade, B = Schnittpunkt)
@@ -154,11 +154,15 @@ def intersect_ray_polygon(ray, plain):
         return
 
 
-""" FUNKTIONIERT NICHT TypeError: unsupported operand type(s) for *: 'Vector' and 'Vector'
+
     
+
+# FUNKTIONIERT NICHT! TypeError: unsupported operand type(s) for *: 'Vector' and 'Vector'
+
     # Hilfreiche Quelle hierfür:
     # https://www.scratchapixel.com/lessons/3d-basic-rendering/minimal-ray-tracer-rendering-simple-shapes/ray-sphere-intersection
 
+# Schnittpunkt Gerade, Kugel
 def intersect_ray_sphere(ray, sphere):
 
     D = Vector(ray.dir_vec)
@@ -184,7 +188,6 @@ def intersect_ray_sphere(ray, sphere):
         intersection2 = None
 
     return intersection1, intersection2,
-"""
 
 
 # -------------------------------------------------- Testeroni ------------------------------------------------------- #
@@ -212,6 +215,7 @@ g2 = Ray(v1, v2)
 mid_point = Point(0, 7, 7)
 K1 = Sphere(mid_point, 5)
 
-#print(intersect_ray_sphere(g2, K1))
+# Beispiel aus: https://www.lernhelfer.de/schuelerlexikon/mathematik-abitur/artikel/kugel-und-gerade)
+# print(intersect_ray_sphere(g2, K1)) müsste P1 = (2.5714.., 11.2857.., 6.8571..) und P2 = (4, 7, 4) zurückgeben
 print("Kreisgleichung als String: " + K1.__str__())
 
