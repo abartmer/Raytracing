@@ -172,7 +172,7 @@ def intersect_ray_sphere(ray, sphere):
 
     # Nach obiger Quelle D normieren => (a = 1)
     D = ray.dir_vec.normalized()
-    # 2. Vektor auch normieren???
+    # 2. Stützvektor auch normieren???
     L = ray.sup_vec.normalized()
     a = D.scalprod(D)
     b = 2 * D.scalprod(L)
