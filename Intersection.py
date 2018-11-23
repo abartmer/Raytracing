@@ -40,8 +40,8 @@ class Vector:
         angle_deg = angle_rad * 180/math.pi
         return angle_rad, angle_deg
 
-    # Abstand zwischen zwei Punkten
-    def dist_to(self, b):
+    # Differenz zwischen zwei Punkten
+    def delta(self, b):
         return Vector(b.x - self.x,
                       b.y - self.y,
                       b.z - self.z)
@@ -54,6 +54,12 @@ class Ray:
         self.sup_vec = sup_vec
         self.dir_vec = dir_vec
         self.r = r
+
+    # Für einen Faktor r einen konkreten Punkt auf der Gerade berechnen
+    def calc_point(self, r):
+        return Point(int(self.sup_vec.x + r * self.dir_vec.x),
+                     int(self.sup_vec.y + r * self.dir_vec.y),
+                     int(self.sup_vec.z + r * self.dir_vec.z))
 
 
 class Plain:
@@ -99,9 +105,7 @@ def intersect_ray_plain(ray, plain):
 
     # errechneten Parameter in die Parameterform der Geraden einsetzen -> Schnittpunkt erhalten
 
-    intersection = Point(int(ray.sup_vec.x + x[0] * ray.dir_vec.x),
-                         int(ray.sup_vec.y + x[0] * ray.dir_vec.y),
-                         int(ray.sup_vec.z + x[0] * ray.dir_vec.z))
+    intersection = ray.calc_point(x[0])
     # Länge Vector |AB| berechnen (A = Stützvektor Gerade, B = Schnittpunkt)
     dist_point_origin = Point(int(intersection.x - ray.sup_vec.x),
                               int(intersection.y - ray.sup_vec.y),
@@ -123,9 +127,7 @@ def intersect_ray_polygon(ray, plain):
 
     #Überprüfung ob der Schnittpunkt im Dreieck liegt. Parameter müssen <=1 sein.
     if x[0] <= 1 and x[1] <= 1 and x[0]+x[1] <= 1:
-        intersection = Point(ray.sup_vec.x + x[0] * ray.dir_vec.x,
-                             ray.sup_vec.y + x[0] * ray.dir_vec.y,
-                             ray.sup_vec.z + x[0] * ray.dir_vec.z)
+        intersection = ray.calc_point(x[0])
         # Länge Vektor |AB| berechnen (A = StützVektor Gerade, B = Schnittpunkt)
         dist_point_origin = Point(intersection.x - ray.sup_vec.x,
                                   intersection.y - ray.sup_vec.y,
@@ -164,9 +166,10 @@ def intersect_ray_sphere(ray, sphere):
 
     # Wenn Diskriminante d < 0 existieren keine Lösungen (Gerade schneidet Kugel nicht)
     else:
-        pass
+        intersection1 = None
+        intersection2 = None
 
-    return
+    return intersection1, intersection2,
 
 """   
     x = ray.sup_vec.x + ray.r * ray.dir_vec.x
@@ -190,5 +193,5 @@ print("Schnittpunkt:", "\t", intersect_ray_plain(g1, e1)[0],
 a1 = Vector(2, 2, 1)
 a2 = Vector(-1, -1, 1)
 print("Skalarprodukt:", a1.scalprod(a2))
-print("Winkel zwischen 2 Vektoren:", a1.angle_with(a2))
-print("Abstand zwischen zwei Punkten:", a1.dist_to(a2))
+print("Winkel zw. 2 Vektoren (Radians, Grad):", a1.angle_with(a2))
+print("Differenz zwischen zwei Punkten:", a1.delta(a2))
