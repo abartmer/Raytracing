@@ -172,8 +172,8 @@ def intersect_ray_sphere(ray, sphere):
 
     # Nach obiger Quelle D normieren => (a = 1)
     D = ray.dir_vec.normalized()
-    # 2. Stützvektor auch normieren???
-    L = ray.sup_vec.normalized()
+    # L = origin - center
+    L = Vector(0, 7, 7)  # falsch
     a = D.scalprod(D)
     b = 2 * D.scalprod(L)
     c = L.scalprod(L) - sphere.radius_squared
@@ -218,6 +218,7 @@ v2 = Vector(-1, 3, 2)
 print("Vektor v1: ", 6*"\t", v1.__str__())
 print("Vektor v2: ", 6*"\t", v2.__str__())
 print("Länge v1: ", 7*"\t", v1.length())
+print("v1 normiert: ", 6*"\t", v1.normalized())
 print("Skalarprodukt v1*v2:", 4*"\t", v1.scalprod(v2))
 print("Winkel zw. v1/v2 (Radians, Grad):", "\t", v1.angle_with(v2))
 print("Differenz zw. v1/v2:", 4*"\t", v1.delta(v2))
