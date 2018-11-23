@@ -145,7 +145,7 @@ def intersect_ray_polygon(ray, plain):
     # Überprüfung ob der Schnittpunkt im Dreieck liegt. Parameter müssen <=1 sein.
     if x[0] <= 1 and x[1] <= 1 and x[0]+x[1] <= 1:
         intersection = ray.calc_point(x[0])
-        # Länge Vektor |AB| berechnen (A = StützVektor Gerade, B = Schnittpunkt)
+        # Länge Vektor |AB| berechnen (A = Stützvektor Gerade, B = Schnittpunkt)
         dist_point_origin = Point(intersection.x - ray.sup_vec.x,
                                   intersection.y - ray.sup_vec.y,
                                   intersection.z - ray.sup_vec.z)
@@ -154,10 +154,6 @@ def intersect_ray_polygon(ray, plain):
     else:
         # liegt nicht im Dreieck
         return
-
-
-
-    
 
 # FUNKTIONIERT NICHT! TypeError: unsupported operand type(s) for *: 'Vector' and 'Vector'
 
