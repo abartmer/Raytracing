@@ -43,23 +43,23 @@ class Vector:
         return np.sqrt(self.x**2 + self.y**2 + self.z**2)
 
     # Skalarprodukt
-    def scalprod(self, b):
-        return self.x * b.x + self.y * b.y + self.z * b.z
+    def scalprod(self, other):
+        return self.x * other.x + self.y * other.y + self.z * other.z
 
     # Winkel zwischen zwei Vektoren
-    def angle_with(self, b):
+    def angle_with(self, other):
         len_u = self.length()
-        len_v = b.length()
+        len_v = other.length()
         # Winkel in Radians und Grad
-        angle_rad = np.arccos(self.scalprod(b)/(len_u * len_v))
+        angle_rad = np.arccos(self.scalprod(other)/(len_u * len_v))
         angle_deg = angle_rad * 180/np.pi
         return angle_rad, angle_deg
 
     # Differenz zwischen zwei Vektoren
-    def delta(self, b):
-        return Vector(b.x - self.x,
-                      b.y - self.y,
-                      b.z - self.z)
+    def delta(self, other):
+        return Vector(other.x - self.x,
+                      other.y - self.y,
+                      other.z - self.z)
 
     # Normierter Vektor (Einheitsvektor) e = v / |v|
     # Skalarprodukt von e * e = 1
@@ -134,9 +134,7 @@ def intersect_ray_plane(ray, plane):
     # errechneten Parameter x[0] als Faktor in die Parameterform der Geraden einsetzen -> Schnittpunkt erhalten
     intersection = ray.calc_point(x[0])
     # Länge Vektor |AB| berechnen (A = Stützvektor Gerade, B = Schnittpunkt)
-    dist_point_origin = Point(int(intersection.x - ray.sup_vec.x),
-                              int(intersection.y - ray.sup_vec.y),
-                              int(intersection.z - ray.sup_vec.z))
+    dist_point_origin = ray.sup_vec.delta(intersection)
     # Ausgabe Schnittpunkt, Abstand
     return intersection, dist_point_origin
 
@@ -155,22 +153,19 @@ def intersect_ray_polygon(ray, plane):
 
     # Überprüfung ob der Schnittpunkt im Dreieck liegt. Parameter müssen <=1 sein.
     if x[0] <= 1 and x[1] <= 1 and x[0]+x[1] <= 1:
+        # errechneten Parameter x[0] als Faktor in die Parameterform der Geraden einsetzen -> Schnittpunkt erhalten
         intersection = ray.calc_point(x[0])
         # Länge Vektor |AB| berechnen (A = Stützvektor Gerade, B = Schnittpunkt)
-        dist_point_origin = Point(intersection.x - ray.sup_vec.x,
-                                  intersection.y - ray.sup_vec.y,
-                                  intersection.z - ray.sup_vec.z)
+        dist_point_origin = ray.sup_vec.delta(intersection)
         # Ausgabe Schnittpunkt, Abstand
         return intersection, dist_point_origin
     else:
         # liegt nicht im Dreieck
         return
 
-# intersect_ray_sphere FUNKTIONIERT NICHT! TypeError: unsupported operand type(s) for *: 'Vector' and 'Vector'
 
-    # Hilfreiche Quelle hierfür:
-    # https://www.scratchapixel.com/lessons/3d-basic-rendering/minimal-ray-tracer-rendering-simple-shapes/ray-sphere-intersection
-
+# Hilfreiche Quelle hierfür:
+# https://www.scratchapixel.com/lessons/3d-basic-rendering/minimal-ray-tracer-rendering-simple-shapes/ray-sphere-intersection
 
 # Schnittpunkt Gerade, Kugel
 def intersect_ray_sphere(ray, sphere):
@@ -219,8 +214,8 @@ print("Schnittpunkt:", 6*"\t", intersect_ray_plane(g1, e1)[0],
 v1 = Vector(5, 4, 2)
 v2 = Vector(-1, 3, 2)
 
-print("v1: ", 8*"\t", v1.__str__())
-print("v2: ", 8*"\t", v2.__str__())
+print("Vektor v1: ", 6*"\t", v1.__str__())
+print("Vektor v2: ", 6*"\t", v2.__str__())
 print("Länge v1: ", 7*"\t", v1.length())
 print("Skalarprodukt v1*v2:", 4*"\t", v1.scalprod(v2))
 print("Winkel zw. v1/v2 (Radians, Grad):", "\t", v1.angle_with(v2))
