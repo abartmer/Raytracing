@@ -40,7 +40,7 @@ class Vector:
         angle_deg = angle_rad * 180/math.pi
         return angle_rad, angle_deg
 
-    # Differenz zwischen zwei Punkten
+    # Differenz zwischen zwei Vektoren
     def delta(self, b):
         return Vector(b.x - self.x,
                       b.y - self.y,
@@ -152,17 +152,13 @@ def intersect_ray_sphere(ray, sphere):
     d = (b**2) - (4*a*c)
     # Wenn Diskriminante d > 0 existieren 2 verschiedene Lösungen (Gerade durchstößt Kugel), für
     #                    d = 0 existieren 2 identische Lösungen (Gerade tangiert Kugel) und für
-
     if d >= 0:
+
         t1 = (-b - math.sqrt(d))/(2*a)
         t2 = (-b + math.sqrt(d))/(2*a)
-        intersection1 = Point(ray.sup_vec.x + t1 * ray.dir_vec.x,
-                              ray.sup_vec.y + t1 * ray.dir_vec.y,
-                              ray.sup_vec.z + t1 * ray.dir_vec.z)
-        intersection2 = Point(ray.sup_vec.x + t2 * ray.dir_vec.x,
-                              ray.sup_vec.y + t2 * ray.dir_vec.y,
-                              ray.sup_vec.z + t2 * ray.dir_vec.z)
 
+        intersection1 = ray.calc_point(t1)
+        intersection2 = ray.calc_point(t2)
 
     # Wenn Diskriminante d < 0 existieren keine Lösungen (Gerade schneidet Kugel nicht)
     else:
@@ -194,4 +190,4 @@ a1 = Vector(2, 2, 1)
 a2 = Vector(-1, -1, 1)
 print("Skalarprodukt:", a1.scalprod(a2))
 print("Winkel zw. 2 Vektoren (Radians, Grad):", a1.angle_with(a2))
-print("Differenz zwischen zwei Punkten:", a1.delta(a2))
+print("Differenz zwischen zwei Vektoren:", a1.delta(a2))
