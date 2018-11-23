@@ -172,7 +172,8 @@ def intersect_ray_sphere(ray, sphere):
 
     # Nach obiger Quelle D normieren => (a = 1)
     D = ray.dir_vec.normalized()
-    L = ray.sup_vec
+    # 2. Vektor auch normieren???
+    L = ray.sup_vec.normalized()
     a = D.scalprod(D)
     b = 2 * D.scalprod(L)
     c = L.scalprod(L) - sphere.radius_squared
@@ -227,7 +228,7 @@ K1 = Sphere(mid_point, 5)
 
 print("Kreisgleichung als String: ", 2*"\t", K1.__str__())
 # Beispiel aus: https://www.lernhelfer.de/schuelerlexikon/mathematik-abitur/artikel/kugel-und-gerade
-# müsste P1 = (2.5714.., 11.2857.., 6.8571..) und P2 = (4, 7, 4) zurückgeben, gibt None zurück, da d < 0
-print("Schnittpunkte mit dem Kreis:", 2*"\t", intersect_ray_sphere(g2, K1))
+# müsste P1 = (2.5714.., 11.2857.., 6.8571..) und P2 = (4, 7, 4) zurückgeben, gibt Müll zurück
+print("Schnittpunkte mit dem Kreis:", 2*"\t", intersect_ray_sphere(g2, K1)[0], ", ", intersect_ray_sphere(g2, K1)[1])
 
 
