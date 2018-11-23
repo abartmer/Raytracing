@@ -154,7 +154,7 @@ def intersect_ray_polygon(ray, plain):
         # liegt nicht im Dreieck
         return
 
-# FUNKTIONIERT NICHT! TypeError: unsupported operand type(s) for *: 'Vector' and 'Vector'
+# intersect_ray_sphere FUNKTIONIERT NICHT! TypeError: unsupported operand type(s) for *: 'Vector' and 'Vector'
 
     # Hilfreiche Quelle hierfür:
     # https://www.scratchapixel.com/lessons/3d-basic-rendering/minimal-ray-tracer-rendering-simple-shapes/ray-sphere-intersection
@@ -170,7 +170,7 @@ def intersect_ray_sphere(ray, sphere):
 
     d = (b**2) - (4*a*c)
     # Wenn Diskriminante d > 0 existieren 2 verschiedene Lösungen (Gerade durchstößt Kugel), für
-    #                    d = 0 existieren 2 identische Lösungen (Gerade tangiert Kugel) und für
+    #                    d = 0 existieren 2 identische Lösungen (Gerade tangiert Kugel) und
     if d >= 0:
 
         t1 = (-b - np.sqrt(d))/(2*a)
