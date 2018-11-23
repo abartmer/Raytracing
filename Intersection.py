@@ -61,7 +61,8 @@ class Vector:
                       b.y - self.y,
                       b.z - self.z)
 
-    # Normierter Vektor (Einheitsvektor) = v / |v|
+    # Normierter Vektor (Einheitsvektor) e = v / |v|
+    # Skalarprodukt von e * e = 1
     def normalized(self):
         length = self.length()
         x = self.x/length
@@ -104,6 +105,7 @@ class Plane:
 
 
 class Sphere:
+    # Kugel besteht aus einem Mittelpunkt und einem Radius
     def __init__(self, mid_point=(0, 0, 0), radius=1):
         self.mid_point = mid_point
         self.radius = radius
@@ -173,6 +175,7 @@ def intersect_ray_polygon(ray, plane):
 # Schnittpunkt Gerade, Kugel
 def intersect_ray_sphere(ray, sphere):
 
+    # Nach obiger Quelle D normieren => (a = 1)
     D = ray.dir_vec.normalized()
     L = ray.sup_vec
     a = D.scalprod(D)
@@ -223,7 +226,9 @@ g2 = Ray(v1, v2)
 mid_point = Point(0, 7, 7)
 K1 = Sphere(mid_point, 5)
 
-# Beispiel aus: https://www.lernhelfer.de/schuelerlexikon/mathematik-abitur/artikel/kugel-und-gerade)
-print("Schnittpunkte mit dem Kreis:", 2*"\t", intersect_ray_sphere(g2, K1))  # müsste P1 = (2.5714.., 11.2857.., 6.8571..) und P2 = (4, 7, 4) zurückgeben
 print("Kreisgleichung als String: ", 2*"\t", K1.__str__())
+# Beispiel aus: https://www.lernhelfer.de/schuelerlexikon/mathematik-abitur/artikel/kugel-und-gerade
+# müsste P1 = (2.5714.., 11.2857.., 6.8571..) und P2 = (4, 7, 4) zurückgeben, gibt (None, None) zurück
+print("Schnittpunkte mit dem Kreis:", 2*"\t", intersect_ray_sphere(g2, K1))
+
 
