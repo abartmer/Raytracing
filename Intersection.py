@@ -200,9 +200,13 @@ print("Schnittpunkt:", "\t", intersect_ray_plain(g1, e1)[0],
 
 v1 = Vector(5, 4, 2)
 v2 = Vector(-1, 3, 2)
-print("Skalarprodukt:", v1.scalprod(v2))
-print("Winkel zw. 2 Vektoren (Radians, Grad):", v1.angle_with(v2))
-print("Differenz zwischen zwei Vektoren:", v1.delta(v2))
+
+print("v1: ", 3*"\t", v1.__str__())
+print("v2: ", 3*"\t", v2.__str__())
+print("Länge v1: ", v1.length())
+print("Skalarprodukt v1*v2:", v1.scalprod(v2))
+print("Winkel zw. v1/v2 (Radians, Grad):", v1.angle_with(v2))
+print("Differenz zw. v1/v2:", v1.delta(v2))
 
 g2 = Ray(v1, v2)
 mid_point = Point(0, 7, 7)
