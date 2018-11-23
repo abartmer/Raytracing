@@ -185,7 +185,7 @@ def intersect_ray_sphere(ray, sphere):
         intersection1 = None
         intersection2 = None
 
-    return intersection1, intersection2,
+    return intersection1, intersection2
 
 
 # -------------------------------------------------- Testeroni ------------------------------------------------------- #
@@ -195,25 +195,25 @@ g1 = Ray(Vector(2, -3, 2), Vector(1, -1, 3))
 e1 = Plain(Vector(-3, 1, 1), Vector(1, -2, -1), Vector(0, -1, 2))
 
 
-print("Schnittpunkt:", "\t", intersect_ray_plain(g1, e1)[0],
-      "\n" "Abstand:", 2*"\t", intersect_ray_plain(g1, e1)[1])
+print("Schnittpunkt:", 6*"\t", intersect_ray_plain(g1, e1)[0],
+      "\n" "Abstand:", 7*"\t", intersect_ray_plain(g1, e1)[1])
 
 
 v1 = Vector(5, 4, 2)
 v2 = Vector(-1, 3, 2)
 
-print("v1: ", 3*"\t", v1.__str__())
-print("v2: ", 3*"\t", v2.__str__())
-print("Länge v1: ", v1.length())
-print("Skalarprodukt v1*v2:", v1.scalprod(v2))
-print("Winkel zw. v1/v2 (Radians, Grad):", v1.angle_with(v2))
-print("Differenz zw. v1/v2:", v1.delta(v2))
+print("v1: ", 8*"\t", v1.__str__())
+print("v2: ", 8*"\t", v2.__str__())
+print("Länge v1: ", 7*"\t", v1.length())
+print("Skalarprodukt v1*v2:", 4*"\t", v1.scalprod(v2))
+print("Winkel zw. v1/v2 (Radians, Grad):", "\t", v1.angle_with(v2))
+print("Differenz zw. v1/v2:", 4*"\t", v1.delta(v2))
 
 g2 = Ray(v1, v2)
 mid_point = Point(0, 7, 7)
 K1 = Sphere(mid_point, 5)
 
 # Beispiel aus: https://www.lernhelfer.de/schuelerlexikon/mathematik-abitur/artikel/kugel-und-gerade)
-# print(intersect_ray_sphere(g2, K1)) müsste P1 = (2.5714.., 11.2857.., 6.8571..) und P2 = (4, 7, 4) zurückgeben
-print("Kreisgleichung als String: " + K1.__str__())
+#print(intersect_ray_sphere(g2, K1))  # müsste P1 = (2.5714.., 11.2857.., 6.8571..) und P2 = (4, 7, 4) zurückgeben
+print("Kreisgleichung als String: ", 2*"\t", K1.__str__())
 
