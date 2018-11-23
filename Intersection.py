@@ -183,9 +183,8 @@ def intersect_ray_sphere(ray, sphere):
     c = L.scalprod(L) - sphere.radius_squared
 
     d = (b**2) - (4*a*c)
-    # Wenn Diskriminante d > 0 existieren 2 verschiedene Lösungen (Gerade durchstößt Kugel), für
-    #                    d = 0 existieren 2 identische Lösungen (Gerade tangiert Kugel) und
-    if d >= 0:
+    # Wenn Diskriminante d > 0 existieren 2 verschiedene Lösungen (Gerade durchstößt Kugel)
+    if d > 0:
 
         t1 = (-b - np.sqrt(d))/(2*a)
         t2 = (-b + np.sqrt(d))/(2*a)
@@ -193,12 +192,17 @@ def intersect_ray_sphere(ray, sphere):
         intersection1 = ray.calc_point(t1)
         intersection2 = ray.calc_point(t2)
 
+        return intersection1, intersection2
+
+    # Wenn Diskriminante d = 0 existieren 2 identische Lösungen (Gerade tangiert Kugel)
+    elif d == 0:
+        t = (-b)/(2*a)
+        intersection = ray.calc_point(t)
+        return intersection
+
     # Wenn Diskriminante d < 0 existieren keine Lösungen (Gerade schneidet Kugel nicht)
     else:
-        intersection1 = None
-        intersection2 = None
-
-    return intersection1, intersection2
+        return
 
 
 # -------------------------------------------------- Testeroni ------------------------------------------------------- #
@@ -228,7 +232,7 @@ K1 = Sphere(mid_point, 5)
 
 print("Kreisgleichung als String: ", 2*"\t", K1.__str__())
 # Beispiel aus: https://www.lernhelfer.de/schuelerlexikon/mathematik-abitur/artikel/kugel-und-gerade
-# müsste P1 = (2.5714.., 11.2857.., 6.8571..) und P2 = (4, 7, 4) zurückgeben, gibt (None, None) zurück
+# müsste P1 = (2.5714.., 11.2857.., 6.8571..) und P2 = (4, 7, 4) zurückgeben, gibt None zurück, da d < 0
 print("Schnittpunkte mit dem Kreis:", 2*"\t", intersect_ray_sphere(g2, K1))
 
 
